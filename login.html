@@ -1,0 +1,33 @@
+<h2>Login</h2>
+<form id="loginForm">
+  <label>
+    Username:<br />
+    <input type="text" id="username" required autocomplete="username" />
+  </label><br /><br />
+  <label>
+    Password:<br />
+    <input type="password" id="password" required autocomplete="current-password" />
+  </label><br /><br />
+  <button type="submit">Login</button>
+</form>
+<p>Belum punya akun? <a href="#register">Daftar di sini</a></p>
+<p id="loginMessage" style="color:red;"></p>
+
+<script>
+  window.pageInit = function() {
+    const form = document.getElementById('loginForm');
+    const message = document.getElementById('loginMessage');
+    message.textContent = '';
+    form.onsubmit = function(e) {
+      e.preventDefault();
+      const username = form.username.value.trim();
+      const password = form.password.value.trim();
+      // Contoh validasi sederhana (ganti dengan backend Anda)
+      if (username === 'user' && password === '1234') {
+        location.hash = '#dashboard';
+      } else {
+        message.textContent = 'Username atau password salah.';
+      }
+    };
+  };
+</script>
