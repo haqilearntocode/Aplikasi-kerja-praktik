@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aplikasi Dashboard</title>
+  <style>
+    /* Styling dasar dan responsif */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    main {
+      flex: 1;
+      padding: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    footer {
+      background: #eee;
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    /* Loading indicator */
+    #loading {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>Aplikasi Dashboard</header>
+  <main id="content">
+    <div id="loading">Memuat halaman...</div>
+  </main>
+  <footer>© 2025 Your Company</footer>
+
+  <script>
+    // Fungsi untuk load halaman HTML ke dalam #content
+    async function loadPage(page) {
+      const content = document.getElementById('content');
+      content.innerHTML = '<div id="loading">Memuat halaman...</div>';
+      try {
+        const response = await fetch(page + '.html');
+        if (!response.ok) throw new Error('Halaman tidak ditemukan');
+        const html = await response.text();
+        content.innerHTML = html;
+        // Jika halaman memiliki fungsi init khusus, panggil di sini
+        if (typeof window.pageInit === 'function') {
+          window.pageInit();
+        }
+      } catch (error) {
+        content.innerHTML = `<p style="color:red;">Error memuat halaman: ${error.message}</p>`;
+      }
+    }
+
+    // Fungsi untuk handle perubahan hash URL
+    function onHashChange() {
+      let page = location.hash.replace('#', '');
+      if (!page) page = 'login'; // default halaman login
+      loadPage(page);
+    }
+
+    // Event listener untuk perubahan hash
+    window.addEventListener('hashchange', onHashChange);
+
+    // Load halaman pertama kali saat buka index.html
+    window.addEventListener('load', onHashChange);
+  </script>
+</body>
+</html>
