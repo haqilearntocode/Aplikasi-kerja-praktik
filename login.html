@@ -22,12 +22,27 @@
       e.preventDefault();
       const username = form.username.value.trim();
       const password = form.password.value.trim();
-      // Contoh validasi sederhana (ganti dengan backend Anda)
-      if (username === 'user' && password === '1234') {
-        location.hash = '#dashboard';
-      } else {
-        message.textContent = 'Username atau password salah.';
-      }
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbx.../exec'; // Ganti dengan URL Apps Script Anda
+
+      fetch(scriptUrl, {
+        method: 'POST',
+        body: new URLSearchParams({
+          action: 'login',
+          username: username,
+          password: password
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          location.hash = '#dashboard';
+        } else {
+          message.textContent = data.message;
+        }
+      })
+      .catch(() => {
+        message.textContent = 'Gagal menghubungi server.';
+      });
     };
   };
 </script>
