@@ -1,0 +1,31 @@
+<h2>Daftar Akun Baru</h2>
+<form id="registerForm">
+  <label>
+    Username:<br />
+    <input type="text" id="username" required autocomplete="username" />
+  </label><br /><br />
+  <label>
+    Password:<br />
+    <input type="password" id="password" required autocomplete="new-password" />
+  </label><br /><br />
+  <button type="submit">Daftar</button>
+</form>
+<p>Sudah punya akun? <a href="#login">Login di sini</a></p>
+<p id="registerMessage" style="color:green;"></p>
+
+<script>
+  window.pageInit = function() {
+    const form = document.getElementById('registerForm');
+    const message = document.getElementById('registerMessage');
+    message.textContent = '';
+    form.onsubmit = function(e) {
+      e.preventDefault();
+      // Contoh simulasi pendaftaran
+      message.style.color = 'green';
+      message.textContent = 'Pendaftaran berhasil! Silakan login.';
+      setTimeout(() => {
+        location.hash = '#login';
+      }, 2000);
+    };
+  };
+</script>
