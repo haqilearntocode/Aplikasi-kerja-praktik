@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aplikasi Dashboard</title>
   <style>
-    /* Styling dasar dan responsif */
     body {
       font-family: Arial, sans-serif;
       margin: 0; padding: 0;
@@ -38,7 +37,6 @@
       font-size: 0.9rem;
       color: #555;
     }
-    /* Loading indicator */
     #loading {
       text-align: center;
       font-style: italic;
@@ -54,7 +52,6 @@
   <footer>© 2025 Your Company</footer>
 
   <script>
-    // Fungsi untuk load halaman HTML ke dalam #content
     async function loadPage(page) {
       const content = document.getElementById('content');
       content.innerHTML = '<div id="loading">Memuat halaman...</div>';
@@ -63,7 +60,6 @@
         if (!response.ok) throw new Error('Halaman tidak ditemukan');
         const html = await response.text();
         content.innerHTML = html;
-        // Jika halaman memiliki fungsi init khusus, panggil di sini
         if (typeof window.pageInit === 'function') {
           window.pageInit();
         }
@@ -72,17 +68,13 @@
       }
     }
 
-    // Fungsi untuk handle perubahan hash URL
     function onHashChange() {
       let page = location.hash.replace('#', '');
-      if (!page) page = 'login'; // default halaman login
+      if (!page) page = 'login';
       loadPage(page);
     }
 
-    // Event listener untuk perubahan hash
     window.addEventListener('hashchange', onHashChange);
-
-    // Load halaman pertama kali saat buka index.html
     window.addEventListener('load', onHashChange);
   </script>
 </body>
